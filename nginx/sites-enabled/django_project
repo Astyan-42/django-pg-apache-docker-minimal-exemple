@@ -4,8 +4,8 @@ server {
     server_name example.org;
     charset utf-8;
 
-    location /static {
-        alias /data/web/djangominimal/static;
+    location /static/ {
+        alias /data/web/static/;
     }
 
     location / {
