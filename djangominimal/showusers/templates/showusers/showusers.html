@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+
+{% block content %}
+    {% for user in user_list %}
+        {{ user.username }} <br>
+    {% empty %}
+        No users
+    {% endfor %}
+
+{% endblock content%}
