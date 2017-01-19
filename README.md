@@ -1,4 +1,4 @@
-# django-pg-apache-docker-minimal-exemple
+# django-pg-nginx-docker-minimal-exemple
 
 You need to install docker https://docs.docker.com/engine/installation/linux/ubuntulinux/#/install-the-latest-version
 And docker-compose (pip install docker-compose or https://docs.docker.com/compose/install/
