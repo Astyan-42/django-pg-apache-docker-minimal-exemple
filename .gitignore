@@ -45,9 +45,6 @@ local_settings.py
 # pyenv
 .python-version
 
-# dotenv
-.env
-
 # virtualenv
 venv/
 ENV/
