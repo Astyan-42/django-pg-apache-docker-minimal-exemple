@@ -26,6 +26,7 @@ services:
 
   web:
     # reminder to migrate sudo docker-compose run web /data/web/manage.py migrate
+    # reminder to collecstatics sudo docker-compose run web /data/web/manage.py collectstatic
     restart: always
     container_name: djangominimal
     env_file: .env
