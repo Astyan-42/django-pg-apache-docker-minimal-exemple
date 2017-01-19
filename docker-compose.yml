@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+
+  db:
+    restart: always
+    image: postgres:latest
+    env_file: .env
+    volumes:
+      - ./dbdata:/var/lib/postgresql/data
+
+  web:
+    restart: always
+    image: django
+    env_file: .env
+    build: ./web
+    command: bash -c "while ! nc -w 1 -z db 5432; do sleep 0.1; done; ./manage.py migrate; while :; do ./manage.py runserver 0.0.0.0:8000; sleep 1; done"
+    volumes:
+      - ./web:/code
+    depends_on:
+      - db
+    environment:
+      IN_DOCKER: 1
