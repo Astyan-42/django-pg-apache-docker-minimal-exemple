@@ -9,7 +9,7 @@ services:
     volumes_from:
       - data
     volumes:
-      - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      #- ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       - ./backups/postgresql:/backup
     env_file:
       - .env
@@ -25,7 +25,7 @@ services:
     command: "true"
 
   web:
-    # reminder to migrate sudo docker-compose run web /code/manage.py migrate
+    # reminder to migrate sudo docker-compose run web /data/web/manage.py migrate
     restart: always
     container_name: djangominimal
     env_file: .env
@@ -35,7 +35,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./web:/code
+      - ./web:/data/web
     depends_on:
       - postgres
 
