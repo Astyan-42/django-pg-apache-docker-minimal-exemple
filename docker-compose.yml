@@ -3,7 +3,7 @@ version: '2'
 services:
 
   db:
-    # restart: always
+    restart: always
     container_name: db
     image: postgres:latest
     env_file: .env
@@ -11,15 +11,29 @@ services:
       - ./dbdata:/var/lib/postgresql/data
 
   web:
-    # restart: always
+    # reminder to migrate sudo docker-compose run web /code/manage.py migrate
+    restart: always
     container_name: djangominimal
     env_file: .env
     build: ./web
-    command: bash -c "while ! nc -w 1 -z db 5432; do sleep 0.1; done; ./manage.py migrate; while :; do ./manage.py runserver 0.0.0.0:8000; sleep 1; done"
-    # command: python manage.py runserver 0.0.0.0:8000
+    # command: bash -c "while ! nc -w 1 -z db 5432; do sleep 0.1; done; ./manage.py migrate; while :; do ./manage.py runserver 0.0.0.0:8000; sleep 1; done"
+    command: gunicorn djangominimal.wsgi:application -w 2 -b :8000
     ports:
       - "8000:8000"
     volumes:
       - ./web:/code
     depends_on:
       - db
+
+  nginx:
+    restart: always
+    container_name: nginx
+    build: ./nginx/
+    ports:
+      - "80:80"
+    volumes:
+      - /www/static
+    volumes_from:
+      - web
+    links:
+      - web:web
