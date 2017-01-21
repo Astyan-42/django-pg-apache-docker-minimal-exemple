@@ -10,7 +10,7 @@ services:
       - data
     volumes:
       #- ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-      - ./backups/postgresql:/backup
+      - backups-postgresql:/backup
     env_file:
       - .env
     # expose:
@@ -21,7 +21,7 @@ services:
     container_name: data
     image: alpine
     volumes:
-      - /var/lib/postgresql
+      - postgres-database:/var/lib/postgresql/data/pgdata
     command: "true"
 
   web:
@@ -37,7 +37,7 @@ services:
       - "8000:8000"
     volumes:
       - ./web:/data/web
-      - ./data:/data/static
+      - www-static:/data/static
     depends_on:
       - postgres
 
@@ -56,3 +56,9 @@ services:
       - web
     links:
       - web:web
+
+volumes:
+    backups-postgresql:
+    postgres-database:
+    www-static:
+    data:
