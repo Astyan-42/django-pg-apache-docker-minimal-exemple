@@ -52,3 +52,4 @@ ENV/
 # other
 db.sqlite3
 web/djangominimal/static/
+data

@@ -37,6 +37,7 @@ services:
       - "8000:8000"
     volumes:
       - ./web:/data/web
+      - ./data:/data/static
     depends_on:
       - postgres
 
@@ -46,8 +47,11 @@ services:
     build: ./nginx/
     ports:
       - "80:80"
+#      - "443:443"
     volumes:
       - /www/static
+#      - ./etc/letsencrypt:/etc/letsencrypt
+#      - ./etc/nginx/certs:/etc/nginx/certs
     volumes_from:
       - web
     links:
