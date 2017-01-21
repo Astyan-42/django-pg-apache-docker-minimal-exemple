@@ -1,10 +1,10 @@
 {% extends "index.html" %}
 
 {% block content %}
-    {% for user in user_list %}
-        {{ user.username }} <br>
+    {% for exemple in exemple_list %}
+        {{ exemple.name }} <br>
     {% empty %}
-        No users
+        No exemple
     {% endfor %}
 
 {% endblock content%}

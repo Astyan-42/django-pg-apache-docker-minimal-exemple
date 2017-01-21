@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+
+{% block content %}
+    {% for exemple in exemple_list %}
+        {{ exemple.name }} <br>
+    {% empty %}
+        No exemple
+    {% endfor %}
+
+{% endblock content%}

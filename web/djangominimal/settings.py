@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'showusers', # just an app to see the list of users
+    'exempleapp', # just an app to see the list of users
 ]
 
 MIDDLEWARE = [
