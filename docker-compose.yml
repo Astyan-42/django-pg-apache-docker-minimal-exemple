@@ -32,7 +32,9 @@ services:
     env_file: .env
     build: ./web
     # command: bash -c "while ! nc -w 1 -z postgres 5432; do sleep 0.1; done; ./manage.py migrate; while :; do ./manage.py runserver 0.0.0.0:8000; sleep 1; done"
-    command: gunicorn djangominimal.wsgi:application -w 2 -b :8000
+    command:  bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn djangominimal.wsgi:application -w 2 -b :8000"
+#    environment:
+#      - VIRTUAL_PROTO=https
     ports:
       - "8000:8000"
     volumes:
@@ -41,17 +43,18 @@ services:
     depends_on:
       - postgres
 
-  nginx:
+  nginx-proxy:
     restart: always
-    container_name: nginx
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
     build: ./nginx/
     ports:
       - "80:80"
-#      - "443:443"
+      - "443:443"
     volumes:
       - /www/static
-#      - ./etc/letsencrypt:/etc/letsencrypt
-#      - ./etc/nginx/certs:/etc/nginx/certs
+#      - /srv/docker/nginx/certs:/etc/nginx/certs:ro
+#      - /var/run/docker.sock:/tmp/docker.sock:ro
     volumes_from:
       - web
     links:
