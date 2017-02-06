@@ -3,7 +3,7 @@ version: '2'
 services:
 
   postgres:
-    restart: always
+    restart: unless-stopped
     container_name: postgres
     image: postgres:latest
     volumes_from:
@@ -17,7 +17,7 @@ services:
     # - "5432"
 
   data:
-    restart: always
+    restart: unless-stopped
     container_name: data
     image: alpine
     volumes:
@@ -27,7 +27,7 @@ services:
   web:
     # reminder to migrate sudo docker-compose run web /data/web/manage.py migrate
     # reminder to collecstatics sudo docker-compose run web /data/web/manage.py collectstatic
-    restart: always
+    restart: unless-stopped
     container_name: djangominimal
     env_file: .env
     build: ./web
@@ -44,7 +44,7 @@ services:
       - postgres
 
   nginx-proxy:
-    restart: always
+    restart: unless-stopped
     image: jwilder/nginx-proxy
     container_name: nginx-proxy
     build: ./nginx/
